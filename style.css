@@ -1,0 +1,30 @@
+body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  h1 {
+    color: #B5838D;
+  }
+  h2, h3 {
+    color: #6D6875;
+  }
+  input[type="text"] {
+    width: 210px;
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #B5838D;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #resultText {
+    margin-top: 20px;
+    font-weight: bold;
+    color:#6D6875;
+  }

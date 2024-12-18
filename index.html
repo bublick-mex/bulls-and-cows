@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Быки и коровы</title>
+    <link rel="stylesheet" href="style.css" />
+    </head>
+  
+    <body>
+      <h1>Игра "Быки и коровы"</h1>
+      <img src="images/bull1.jpg"> <h2> Правила игры </h2> <img src="images/cow1.jpg">
+      <h3> Компьютер задумывает четыре различные цифры из 0,1,2,...9. Игрок делает ходы, чтобы узнать эти цифры и их порядок.
+    
+    Каждый ход состоит из четырёх цифр, 0 может стоять на первом месте.
+    
+    В ответ компьютер показывает число отгаданных цифр, стоящих на своих местах (число быков) и число отгаданных цифр, стоящих не на своих местах (число коров).
+    
+    Пример
+    Компьютер задумал 0834.
+    
+    Игрок сделал ход 8134.
+    
+    Компьютер ответил: 2 быка (цифры 3 и 4) и 1 корова (цифра 8).</h3> 
+       <p>Попробуйте угадать загаданное четырехзначное число.</p>
+       <input type="text" id="guessInput" placeholder="Введите четырехзначное число...">
+       <button id="submitBtn">Угадать</button>
+       <p id="resultText"></p>
+
+
+<script>
+
+function random(){
+    const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    let number = '';
+
+    for(let i = 0; i < 4; i++) {
+        const random = Math.floor(Math.random() * digits.length);
+        number += digits[random];
+        digits.splice(random, 1)
+    }
+    return number;
+}
+
+function check(secretNumber, guess){
+    let bulls = 0;
+    let cows = 0;
+
+    for (let i = 0; i < secretNumber.length; i++) {
+        if (secretNumber[i] === guess[i]) {
+            bulls++;
+        }
+        else if (secretNumber.includes(guess[i])) {
+            cows++;
+        }
+    }
+    return { bulls, cows};
+}
+
+function game() {
+const secretNumber = random();
+let attempts = 0;
+
+const guessInput = document.getElementById('guessInput');
+const submitBtn = document.getElementById('submitBtn');
+const resultText = document.getElementById('resultText');
+
+submitBtn.addEventListener('click', function(){
+    const guess = guessInput.value;
+
+    if (guess.length !== 4 || isNaN(guess)) {
+        resultText.innerHTML += 'Пожалуйста, введите четырехзначное число<br>';
+        return;
+    }
+
+    attempts++;
+
+    const result = check(secretNumber, guess);
+
+    resultText.innerHTML += `Попытка ${attempts}: ${guess} - Быки: ${result.bulls}, Коровы: ${result.cows}<br>`;
+
+    if (result.bulls === 4) {
+        resultText.innerHTML += `Поздравляем! Вы угадали число ${secretNumber} за ${attempts} попыток!<br>`;
+
+        guessInput.disabled = true;
+        submitBtn.disabled = true;
+    }
+    guessInput.value = '';
+});
+}
+
+game();
+
+</script>
+
+    </body>
+
+    </html>
